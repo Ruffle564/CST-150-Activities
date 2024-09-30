@@ -1,0 +1,127 @@
+public class InventoryItem
+{
+    // Property for the item description
+    public string CardName { get; set; }
+
+    // Property for the quantity of the item
+    public int Quantity { get; set; }
+
+    // Property for the cost of the item
+    public decimal Cost { get; set; }
+
+    // Property for the set the card is from
+
+    public string Set { get; set; }
+
+    // Property for the rarity of the card
+
+    public string Rarity { get; set; }
+
+    // Constructor to initialize an inventory item
+    public InventoryItem(string cardname, int quantity, decimal cost, string set, string rarity)
+    {
+        CardName = cardname;
+        Quantity = quantity;
+        Cost = cost;
+        Set = set;
+        Rarity = rarity;
+    }
+
+    // Method to display item details
+    public void DisplayItem()
+    {
+        Console.WriteLine($"Description: {CardName}");
+        Console.WriteLine($"Quantity: {Quantity}");
+        Console.WriteLine($"Cost: {Cost:C}");
+        Console.WriteLine($"Set: {Set}");
+        Console.WriteLine($"Rarity: {Rarity}");
+    }
+
+    public class InventoryManager
+    {
+        // List to store inventory items
+        private List<InventoryItem> inventory = new List<InventoryItem>();
+
+        // Method to add an item to the inventory
+        public void AddItem(InventoryItem item)
+        {
+            inventory.Add(item);
+            Console.WriteLine("Item added successfully!\n");
+        }
+
+        // Method to display all items in the inventory
+        public void DisplayInventory()
+        {
+            if (inventory.Count == 0)
+            {
+                Console.WriteLine("Inventory is empty.\n");
+            }
+            else
+            {
+                foreach (var item in inventory)
+                {
+                    item.DisplayItem();
+                }
+            }
+        }
+
+        // Method to input an inventory item
+        public void InputItem()
+        {
+            Console.Write("Enter card name: ");
+            string cardName = Console.ReadLine();
+
+            Console.Write("Enter quantity: ");
+            int quantity = int.Parse(Console.ReadLine());
+
+            Console.Write("Enter cost: ");
+            decimal cost = decimal.Parse(Console.ReadLine());
+
+            Console.Write("Enter set: ");
+            string set = Console.ReadLine();
+
+            Console.Write("Enter rarity: ");
+            string rarity = Console.ReadLine();
+
+            // Create a new inventory item and add it to the inventory
+            InventoryItem item = new InventoryItem(cardName, quantity, cost, set, rarity);
+            AddItem(item);
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            InventoryManager manager = new InventoryManager();
+            bool running = true;
+
+            while (running)
+            {
+                Console.WriteLine("Inventory Menu:");
+                Console.WriteLine("1. Add New Item");
+                Console.WriteLine("2. Display Inventory");
+                Console.WriteLine("3. Exit");
+                Console.Write("Select an option: ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        manager.InputItem();
+                        break;
+                    case "2":
+                        manager.DisplayInventory();
+                        break;
+                    case "3":
+                        running = false;
+                        Console.WriteLine("Exiting...");
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.\n");
+                        break;
+                }
+            }
+        }
+    }
+}
